@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        MSP2 OBFX
 // @namespace   https://msp2s.pages.dev/
-// @version     1.5.3
+// @version     1.5.8
 // @description These are the automation processes required for OBFX MSP2.
 // @match       https://moviestarplanet2.com/*
 // @grant       GM_addElement

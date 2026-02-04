@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSP2 - OBFX®</title>
+
+    <!-- Google AdSense doğrulama kodu -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1577065347252131"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Notifications -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- Main Header -->
+    <div class="main-header">
+        <div class="header-left">
+            <button id="languageBtn" class="language-btn" style="display: none;">
+                <span class="icon">🌍</span>
+                <span data-translate="language">Language</span>
+            </button>
+            <button id="zoomBtn" class="zoom-btn" style="display: none;">
+                <span class="icon">🔍</span>
+                <span data-translate="zoom">Zoom</span>
+            </button>
+            <button id="planBtn" class="plan-btn" style="display: none;">
+                <span class="icon">⭐</span>
+                <span data-translate="plan">Plan</span>
+            </button>
+            <button id="obfxProBtn" class="obfx-pro-btn" style="display: none;">
+                <span class="icon">👑</span>
+                <span data-translate="obfxPro">OBFX Pro</span>
+            </button>
+        </div>
+        <h1 data-translate="title">MSP2 Tool - OBFX</h1>
+        <div class="header-right">
+            <button id="obfxPlusBtn" class="obfx-plus-btn" style="display: none;">
+                <span class="icon">⚡</span>
+                <span>OBFX +</span>
+            </button>
+            <button id="autographBtn" class="autograph-btn" style="display: none;">
+                <span class="icon">✍️</span>
+                <span data-translate="autograph">Autograph</span>
+            </button>
+            <button id="changePasswordBtn" class="change-password-btn" style="display: none;">
+                <span class="icon">🔑</span>
+                <span data-translate="changePassword">Change Password</span>
+            </button>
+            <button id="exitBtn" class="exit-btn" style="display: none;">
+                <span class="icon">🚪</span>
+                <span data-translate="exit">Exit</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="login-screen">
+            <div class="login-container">
+                <div class="login-header">
+                    <h2 data-translate="welcomeTitle">Welcome to MSP2 Tool</h2>
+                    <p data-translate="welcomeSubtitle">Choose your login method</p>
+                </div>
+                
+                <!-- Login Method Selection -->
+                <div class="login-methods">
+                    <div class="method-buttons">
+                        <button id="websocketMethodBtn" class="method-btn active">
+                            <span class="icon">🔗</span>
+                            <span data-translate="websocketLogin">WebSocket Login</span>
+                        </button>
+                        <button id="accountMethodBtn" class="method-btn">
+                            <span class="icon">👤</span>
+                            <span data-translate="accountLogin">Account Login</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- WebSocket Login Form -->
+                <div id="websocketLoginForm" class="login-form active">
+                    <div class="input-group">
+                        <input 
+                            type="password" 
+                            id="websocketInput" 
+                            data-translate-placeholder="websocketPlaceholder"
+                            placeholder="Paste WebSocket message here..."
+                            class="websocket-input"
+                        >
+                        <button id="websocketLoginBtn" class="btn btn-login">
+                            <span class="login-icon">🔐</span>
+                            <span data-translate="login">Login</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Account Login Form -->
+                <div id="accountLoginForm" class="login-form">
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="usernameInput" 
+                            data-translate-placeholder="usernamePlaceholder"
+                            placeholder="Username"
+                            class="account-input"
+                        >
+                        <input 
+                            type="password" 
+                            id="passwordInput" 
+                            data-translate-placeholder="passwordPlaceholder"
+                            placeholder="Password"
+                            class="account-input"
+                        >
+                        <button id="accountLoginBtn" class="btn btn-login">
+                            <span class="login-icon">👤</span>
+                            <span data-translate="login">Login</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div id="loadingScreen" class="loading-screen" style="display: none;">
+            <div class="loading-animation">
+                <div class="dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+            <div id="loadingText" class="loading-text" data-translate="querySent">Query sent...</div>
+        </div>
+
+        <!-- Bootloader Screen -->
+        <div id="bootloaderScreen" class="bootloader-screen" style="display: none;">
+            <div class="bootloader-content">
+                <div class="bootloader-logo">
+                    <img src="obfx.png" alt="OBFX" />
+                </div>
+                <div class="bootloader-loading">
+                    <div class="loading-spinner"></div>
+                </div>
+                <div class="bootloader-text" data-translate="loading">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Banned Screen -->
+        <div id="bannedScreen" class="banned-screen" style="display: none;">
+            <div class="banned-icon">
+                <div class="warning-symbol">⚠️</div>
+            </div>
+            <div class="banned-title" data-translate="banned">You're banned</div>
+            <div class="banned-subtitle" data-translate="bannedMessage">OBFX does not support logging into this account.</div>
+            <button id="bannedBackBtn" class="btn btn-secondary" data-translate="backToLogin">Return to the Home Screen</button>
+        </div>
+
+        <!-- Main Menu -->
+        <div id="mainMenu" class="main-menu" style="display: none;">
+            <!-- User Info Section -->
+            <div class="user-info">
+                <div class="avatar-container">
+                    <img id="userAvatar" class="user-avatar" src="" alt="Avatar">
+                    <div class="avatar-border"></div>
+                </div>
+                <div class="user-details">
+                    <div class="user-name-container">
+                        <div class="username" id="username">Loading...</div>
+                        <div id="userPlan" class="user-plan">Obfx</div>
+                    </div>
+                    <div class="balance-info">
+                        <div class="balance-item">
+                            <span class="currency-icon starcoin">⭐</span>
+                            <span id="starcoins" class="currency-amount">0</span>
+                        </div>
+                        <div class="balance-item">
+                            <span class="currency-icon diamond">💎</span>
+                            <span id="diamonds" class="currency-amount">0</span>
+                        </div>
+                    </div>
+                    <div class="level-info">
+                        <div class="level-star">
+                            <span id="userLevel">1</span>
+                        </div>
+                        <div class="xp-bar">
+                            <div id="xpProgress" class="xp-fill"></div>
+                            <span id="xpText" class="xp-text">0 / 100</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Section -->
+            <div class="menu-section">
+                <h2 data-translate="menu">Menu</h2>
+                
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button id="changeMoodBtn" class="btn btn-secondary">
+                        <span class="icon">😊</span>
+                        <span data-translate="changeMood">Change Mood</span>
+                    </button>
+                    <button id="changeGenderBtn" class="btn btn-secondary">
+                        <span class="icon">⚧</span>
+                        <span data-translate="gender">Gender</span>
+                    </button>
+                    <button id="commentsBtn" class="btn btn-secondary">
+                        <span class="icon">💬</span>
+                        <span data-translate="comments">Comments</span>
+                        <span id="commentsCount" class="comments-count">(0)</span>
+                    </button>
+                    <button id="scammerTestBtn" class="btn btn-secondary">
+                        <span class="icon">🔍</span>
+                        <span data-translate="scammerTest">Scammer Test</span>
+                    </button>
+                    <button id="friendsSettingsBtn" class="btn btn-secondary">
+                        <span class="icon">👥</span>
+                        <span data-translate="friendsSettings">Friends Settings</span>
+                    </button>
+                    <div class="premium-feature">
+                        <button id="giftsBtn" class="btn btn-secondary gifts-btn">
+                            <span class="icon">🎁</span>
+                            <span data-translate="gifts">Gifts</span> (<span id="giftsCount">0</span>)
+                        </button>
+                        <div id="giftsPremiumOverlay" class="premium-overlay" style="display: none;">
+                            <span class="premium-text" data-translate="upgradeToObfxPlus">Upgrade to OBFX Plus</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Task Section -->
+                <div class="menu-item daily-task-section">
+                    <h3 data-translate="dailyTask">Daily Task</h3>
+                    <div class="daily-task-buttons">
+                        <div class="premium-feature">
+                            <button id="startDailyTaskBtn" class="btn btn-start">
+                                <span class="icon">▶️</span>
+                                <span data-translate="startEnhanced">Start</span>
+                            </button>
+                            <div id="dailyTaskPremiumOverlay" class="premium-overlay" style="display: none;">
+                                <span class="premium-text" data-translate="requiresLevel10OrPlus">Requires Level 10+ or OBFX Plus</span>
+                            </div>
+                        </div>
+                        
+                        <div class="premium-feature">
+                            <button id="fastStartDailyTaskBtn" class="btn btn-fast">
+                                <span class="icon">⚡</span>
+                                <span data-translate="fastStart">Fast Start</span>
+                            </button>
+                            <div id="fastStartPremiumOverlay" class="premium-overlay" style="display: none;">
+                                <span class="premium-text" data-translate="requiresLevel10OrPlus">Requires Level 10+ or OBFX Plus</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="progressContainer" class="progress-container" style="display: none;">
+                        <div class="progress-bar">
+                            <div id="progressBar" class="progress-fill"></div>
+                        </div>
+                        <div id="progressText" class="progress-text">0%</div>
+                        <div id="progressStatus" class="progress-status"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Version -->
+            <div class="panel-footer">
+                <span>V 2.2.5</span>
+            </div>
+        </div>
+
+        <!-- OBFX Pro Panel -->
+        <div id="obfxProScreen" class="obfx-pro-screen" style="display: none;">
+            <div class="obfx-pro-header">
+                <h2 data-translate="obfxPro">OBFX Pro</h2>
+                <button id="closeObfxProBtn" class="close-btn">×</button>
+            </div>
+            
+            <!-- Pro Tab Navigation -->
+            <div class="pro-tabs">
+                <button id="proAccountManagementTab" class="pro-tab active" data-tab="accountManagement">
+                    <span data-translate="accountManagement">Account Management</span>
+                </button>
+                <button id="proAccountInfoTab" class="pro-tab" data-tab="accountInfo">
+                    <span data-translate="accountInfo">Account Info</span>
+                </button>
+                <button id="proInboxTab" class="pro-tab" data-tab="inbox">
+                    <span>Inbox</span>
+                </button>
+            </div>
+            
+            <div class="obfx-pro-content">
+                <!-- Account Management Tab Content -->
+                <div id="accountManagementContent" class="pro-tab-content active">
+                    <!-- Method Selection -->
+                    <div class="pro-method-selection">
+                        <div class="pro-method-buttons">
+                            <button id="proAccountMethodBtn" class="pro-method-btn active">
+                                <span class="icon">👤</span>
+                                <span data-translate="accountMethod">Account Method</span>
+                            </button>
+                            <button id="proWebsocketMethodBtn" class="pro-method-btn">
+                                <span class="icon">🔗</span>
+                                <span data-translate="websocketMethod">WebSocket Method</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Account Method Form -->
+                    <div id="proAccountForm" class="pro-form active">
+                        <div class="pro-input-group">
+                            <input 
+                                type="text" 
+                                id="proUsernameInput" 
+                                data-translate-placeholder="usernamePlaceholder"
+                                placeholder="Username"
+                                class="pro-input"
+                            >
+                            <input 
+                                type="password" 
+                                id="proPasswordInput" 
+                                data-translate-placeholder="passwordPlaceholder"
+                                placeholder="Password"
+                                class="pro-input"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- WebSocket Method Form -->
+                    <div id="proWebsocketForm" class="pro-form">
+                        <div class="pro-input-group">
+                            <textarea 
+                                id="proWebsocketInput" 
+                                data-translate-placeholder="websocketPlaceholder"
+                                placeholder="Paste WebSocket message here..."
+                                class="pro-input pro-textarea"
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="pro-action-buttons">
+                        <button id="proSaveBtn" class="btn btn-primary">
+                            <span class="icon">💾</span>
+                            <span data-translate="save">Save</span>
+                        </button>
+                        <button id="proResetBtn" class="btn btn-secondary">
+                            <span class="icon">🔄</span>
+                            <span data-translate="reset">Reset</span>
+                        </button>
+                    </div>
+
+                    <!-- Accounts Counter -->
+                    <div class="pro-accounts-counter">
+                        <span data-translate="accounts">Accounts</span> (<span id="proAccountsCount">0</span>)
+                    </div>
+
+                    <!-- Bulk Operations -->
+                    <div class="pro-bulk-operations">
+                        <h3>Bulk Operations</h3>
+                        <div class="pro-task-buttons">
+                            <button id="proBulkNormalTasksBtn" class="btn btn-start">
+                                <span class="icon">▶️</span>
+                                <span data-translate="normalTasks">Normal Daily Tasks</span>
+                            </button>
+                            <button id="proBulkFastTasksBtn" class="btn btn-fast">
+                                <span class="icon">⚡</span>
+                                <span data-translate="fastTasks">Fast Daily Tasks</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Info Tab Content -->
+                <div id="accountInfoContent" class="pro-tab-content">
+                    <div class="account-info-search">
+                        <div class="search-input-wrapper">
+                            <input 
+                                type="text" 
+                                id="accountInfoUsernameInput" 
+                                placeholder="Enter username to search..."
+                                class="account-info-input"
+                            >
+                        </div>
+                        <div class="search-button-wrapper">
+                            <button id="accountInfoSearchBtn" class="btn btn-primary account-info-search-btn">
+                                <span class="icon">🔍</span>
+                                <span>Search</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="accountInfoResult" class="account-info-result" style="display: none;">
+                        <!-- User Profile -->
+                        <div class="account-info-profile">
+                            <div class="account-info-avatar-container">
+                                <img id="accountInfoUserAvatar" class="account-info-user-avatar" src="" alt="Avatar">
+                                <div class="account-info-avatar-border"></div>
+                            </div>
+                            <div id="accountInfoUsername" class="account-info-username">Loading...</div>
+                        </div>
+
+                        <!-- Friends Grid -->
+                        <div class="friends-grid">
+                            <div id="friendsGridContainer" class="friends-grid-container">
+                                <!-- 6 friend slots -->
+                                <div class="friend-slot empty" id="friendSlot0"></div>
+                                <div class="friend-slot empty" id="friendSlot1"></div>
+                                <div class="friend-slot empty" id="friendSlot2"></div>
+                                <div class="friend-slot empty" id="friendSlot3"></div>
+                                <div class="friend-slot empty" id="friendSlot4"></div>
+                                <div class="friend-slot empty" id="friendSlot5"></div>
+                            </div>
+                        </div>
+
+                        <!-- Account Details -->
+                        <div class="account-details">
+                            <div class="account-detail-item">
+                                <span class="detail-label">Start Date:</span>
+                                <span id="accountCreatedDate" class="detail-value">-</span>
+                            </div>
+                            <div class="account-detail-item">
+                                <span class="detail-label">Last Login:</span>
+                                <span id="accountLastLogin" class="detail-value">-</span>
+                            </div>
+                            <div class="account-detail-item">
+                                <span class="detail-label">Location:</span>
+                                <span id="accountLocation" class="detail-value">-</span>
+                            </div>
+                            <div class="account-detail-item">
+                                <span class="detail-label">House Name:</span>
+                                <span id="accountHomeName" class="detail-value">-</span>
+                            </div>
+                            <div class="account-detail-item">
+                                <span class="detail-label">Last Updated:</span>
+                                <span id="accountHomeLastEdit" class="detail-value">-</span>
+                            </div>
+                            <div class="account-detail-item">
+                                <span class="detail-label">Number of Arrangements:</span>
+                                <span id="accountHomeEditCount" class="detail-value">-</span>
+                            </div>
+                            <div class="account-detail-item">
+                                <span class="detail-label">Profile Animation Last Modified Date:</span>
+                                <span id="accountProfileAnimDate" class="detail-value">-</span>
+                            </div>
+                            <div class="account-detail-item">
+                                <span class="detail-label">Number of Changes:</span>
+                                <span id="accountProfileAnimCount" class="detail-value">-</span>
+                            </div>
+                        </div>
+
+                        <!-- Home Image -->
+                        <div class="home-image-container">
+                            <div class="home-image-header">Home Photo:</div>
+                            <div id="accountHomeImageContainer" class="home-image-wrapper">
+                                <img id="accountHomeImage" class="home-image" src="" alt="Home Image" style="display: none;">
+                                <div id="homeImageLoading" class="home-image-loading">Loading home image...</div>
+                                <div id="homeImageError" class="home-image-error" style="display: none;">Home image not available</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inbox Tab Content -->
+                <div id="inboxContent" class="pro-tab-content">
+                    <div id="inboxView" class="inbox-view" style="display: block;">
+                        <div id="inboxConversationsList" class="inbox-conversations-list">
+                            <div class="loading-conversations">Loading conversations...</div>
+                        </div>
+                        <div id="inboxPagination" class="inbox-pagination" style="display: none;">
+                            <button id="prevInboxBtn" class="pagination-btn">‹</button>
+                            <span id="inboxPageInfo" class="page-info">1 / 1</span>
+                            <button id="nextInboxBtn" class="pagination-btn">›</button>
+                        </div>
+                    </div>
+
+                    <div id="conversationView" class="conversation-view" style="display: none;">
+                        <div class="conversation-header">
+                            <button id="backToInboxBtn" class="btn btn-secondary">
+                                <span class="icon">←</span>
+                                <span>Back to Inbox</span>
+                            </button>
+                            <div class="conversation-title">
+                                <div class="conversation-user-avatar">
+                                    <img id="conversationUserAvatar" src="" alt="Avatar">
+                                </div>
+                                <div id="conversationUserName" class="conversation-user-name">Loading...</div>
+                            </div>
+                        </div>
+                        <div id="conversationMessagesList" class="conversation-messages-list">
+                            <div class="loading-messages">Loading messages...</div>
+                        </div>
+                        <div id="conversationPagination" class="conversation-pagination" style="display: none;">
+                            <button id="prevMessagesBtn" class="pagination-btn">‹</button>
+                            <span id="messagesPageInfo" class="page-info">1 / 1</span>
+                            <button id="nextMessagesBtn" class="pagination-btn">›</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scammer Test Screen -->
+        <div id="scammerTestScreen" class="scammer-test-screen" style="display: none;">
+            <div class="scammer-test-header">
+                <h2 data-translate="scammerTest">Scammer Test</h2>
+                <button id="closeScammerTestBtn" class="close-btn">×</button>
+            </div>
+            
+            <div class="scammer-test-content">
+                <div class="scammer-test-input">
+                    <div class="input-row">
+                        <input 
+                            type="text" 
+                            id="scammerTestUsernameInput" 
+                            data-translate-placeholder="enterUsername" 
+                            placeholder="Kullanıcı adını girin" 
+                            class="username-input-compact"
+                        >
+                        <button id="testScammerBtn" class="btn btn-primary test-btn">
+                            <span class="icon">🔍</span>
+                            <span data-translate="test">Test</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="scammerTestResult" class="scammer-test-result" style="display: none;">
+                    <div class="scammer-user-profile">
+                        <div class="scammer-avatar-container">
+                            <img id="scammerUserAvatar" class="scammer-user-avatar" src="" alt="Avatar">
+                            <div class="scammer-avatar-border"></div>
+                        </div>
+                        <div id="scammerUsername" class="scammer-username">Loading...</div>
+                    </div>
+
+                    <div class="security-status">
+                        <div class="security-status-header" data-translate="securityStatus">Güvenlik Durumu</div>
+                        <div id="securityIndicator" class="security-indicator">
+                            <div id="securityColor" class="security-color"></div>
+                            <div id="securityText" class="security-text"></div>
+                        </div>
+                    </div>
+
+                    <div class="security-description">
+                        <div class="description-header" data-translate="description">Açıklama</div>
+                        <div id="securityDescription" class="description-text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Friends Settings Screen -->
+<div id="friendsSettingsScreen" class="friends-settings-screen" style="display: none;">
+    <div class="friends-header">
+        <h2 data-translate="friendsSettings">Friends Settings</h2>
+        <button id="closeFriendsBtn" class="close-btn">×</button>
+    </div>
+    
+    <!-- Tab Navigation -->
+    <div class="friends-tabs">
+        <button id="friendsTab" class="friends-tab active" data-tab="friends">
+            <span data-translate="friends">Friends</span>
+            <span id="friendsTabCount" class="tab-count">(0)</span>
+        </button>
+        
+        <div class="premium-feature friends-tab-wrapper">
+            <button id="requestsTab" class="friends-tab" data-tab="requests">
+                <span data-translate="requestSenders">Request Senders</span>
+                <span id="requestsTabCount" class="tab-count">(0)</span>
+            </button>
+            <div id="requestsTabPremiumOverlay" class="premium-overlay friends-tab-premium" style="display: none;">
+                <span class="premium-text" data-translate="upgradeToObfxPlus">Upgrade to OBFX Plus</span>
+            </div>
+        </div>
+        
+        <div class="premium-feature friends-tab-wrapper">
+            <button id="blockedTab" class="friends-tab" data-tab="blocked">
+                <span data-translate="blocked">Blocked</span>
+                <span id="blockedTabCount" class="tab-count">(0)</span>
+            </button>
+            <div id="blockedTabPremiumOverlay" class="premium-overlay friends-tab-premium" style="display: none;">
+                <span class="premium-text" data-translate="upgradeToObfxPlus">Upgrade to OBFX Plus</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="friends-filters">
+        <div class="filter-group">
+            <div class="level-filter">
+                <input type="number" id="levelFilter" placeholder="Level" min="1" max="999">
+            </div>
+            <div class="premium-feature">
+                <button id="vipFilterBtn" class="vip-filter-btn">
+                    <span class="icon">👑</span>
+                    <span data-translate="vipOnly">VIP Only</span>
+                </button>
+                <div id="vipFilterPremiumOverlay" class="premium-overlay vip-filter-premium" style="display: none;">
+                    <span class="premium-text" data-translate="upgradeToObfxPlus">Upgrade to OBFX Plus</span>
+                </div>
+            </div>
+        </div>
+        <button id="deleteAllBtn" class="btn btn-danger delete-all-btn">
+            <span class="icon">🗑️</span>
+            <span data-translate="deleteAll">Delete All</span>
+        </button>
+    </div>
+
+    <!-- Content Area -->
+    <div class="friends-content">
+        <!-- Friends List -->
+        <div id="friendsContent" class="friends-tab-content active">
+            <div id="friendsList" class="friends-list">
+                <div class="loading-friends" data-translate="loadingFriends">Loading friends...</div>
+            </div>
+            <div id="friendsPagination" class="friends-pagination" style="display: none;">
+                <button id="prevFriendsBtn" class="pagination-btn">‹</button>
+                <span id="friendsPageInfo" class="page-info">1 / 1</span>
+                <button id="nextFriendsBtn" class="pagination-btn">›</button>
+            </div>
+        </div>
+
+        <!-- Requests List -->
+        <div id="requestsContent" class="friends-tab-content">
+            <div id="requestsList" class="friends-list">
+                <div class="loading-friends" data-translate="loadingRequests">Loading requests...</div>
+            </div>
+            <div id="requestsPagination" class="friends-pagination" style="display: none;">
+                <button id="prevRequestsBtn" class="pagination-btn">‹</button>
+                <span id="requestsPageInfo" class="page-info">1 / 1</span>
+                <button id="nextRequestsBtn" class="pagination-btn">›</button>
+            </div>
+        </div>
+
+        <!-- Blocked List -->
+        <div id="blockedContent" class="friends-tab-content">
+            <div id="blockedList" class="friends-list">
+                <div class="loading-friends" data-translate="loadingBlocked">Loading blocked...</div>
+            </div>
+            <div id="blockedPagination" class="friends-pagination" style="display: none;">
+                <button id="prevBlockedBtn" class="pagination-btn">‹</button>
+                <span id="blockedPageInfo" class="page-info">1 / 1</span>
+                <button id="nextBlockedBtn" class="pagination-btn">›</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Comments Screen -->
+        <div id="commentsScreen" class="comments-screen" style="display: none;">
+            <div class="comments-header">
+                <h2 data-translate="comments">Comments</h2>
+                <button id="closeCommentsBtn" class="close-btn">×</button>
+            </div>
+            
+            <div class="comments-content">
+                <div id="commentsList" class="comments-list">
+                    <div class="loading-comments" data-translate="loadingComments">Loading comments...</div>
+                </div>
+                
+                <div id="commentsPagination" class="comments-pagination" style="display: none;">
+                    <button id="prevCommentsBtn" class="pagination-btn">‹</button>
+                    <span id="commentsPageInfo" class="page-info">1 / 1</span>
+                    <button id="nextCommentsBtn" class="pagination-btn">›</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Change Mood Screen -->
+        <div id="changeMoodScreen" class="change-mood-screen" style="display: none;">
+            <div class="mood-header">
+                <h2 data-translate="changeMood">Change Mood</h2>
+                <button id="closeMoodBtn" class="close-btn">×</button>
+            </div>
+            
+            <div class="mood-selector">
+                <button id="prevMoodBtn" class="nav-btn prev-btn">‹</button>
+                
+                <div class="mood-display">
+                    <div class="mood-image-container">
+                        <img id="currentMoodImage" class="mood-image" src="" alt="Mood">
+                        <div class="mood-overlay">
+                            <span id="moodNumber" class="mood-number">#1</span>
+                        </div>
+                        <div id="moodPremiumOverlay" class="mood-premium-overlay" style="display: none;">
+                            <div class="mood-premium-text" data-translate="upgradeToObfxPlus">Upgrade to OBFX Plus</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="nextMoodBtn" class="nav-btn next-btn">›</button>
+            </div>
+            
+            <div class="mood-controls">
+                <span id="moodCounter" class="mood-counter">1 / 37</span>
+                <button id="applyMoodBtn" class="btn btn-apply" data-translate="applyMood">Apply Mood</button>
+            </div>
+        </div>
+
+        <!-- Change Password Screen -->
+        <div id="changePasswordScreen" class="change-password-screen" style="display: none;">
+            <div class="password-header">
+                <h2 data-translate="changePassword">Change Password</h2>
+                <button id="closePasswordBtn" class="close-btn">×</button>
+            </div>
+            
+            <div class="password-content">
+                <div class="user-info-display">
+                    <div class="avatar-container">
+                        <img id="passwordUserAvatar" class="user-avatar" src="" alt="Avatar">
+                        <div class="avatar-border"></div>
+                    </div>
+                    <div id="passwordUsername" class="username">Loading...</div>
+                </div>
+
+                <div class="password-inputs">
+                    <div class="input-group-spaced">
+                        <input 
+                            type="password" 
+                            id="currentPasswordInput" 
+                            data-translate-placeholder="currentPassword"
+                            placeholder="Current Password"
+                            class="password-input"
+                        >
+                        <input 
+                            type="password" 
+                            id="newPasswordInput" 
+                            data-translate-placeholder="newPassword"
+                            placeholder="New Password"
+                            class="password-input"
+                        >
+                        <input 
+                            type="password" 
+                            id="confirmPasswordInput" 
+                            data-translate-placeholder="confirmPassword"
+                            placeholder="Confirm New Password"
+                            class="password-input"
+                        >
+                    </div>
+                </div>
+
+                <div class="password-buttons">
+                    <button id="cancelPasswordBtn" class="btn btn-secondary" data-translate="cancel">Cancel</button>
+                    <button id="submitPasswordBtn" class="btn btn-primary" data-translate="changePassword">Change Password</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Password Change Success Dialog -->
+        <div id="passwordSuccessDialog" class="modal-overlay zoom-independent" style="display: none;">
+            <div class="password-success-dialog">
+                <div class="success-icon">
+                    <div class="success-checkmark">✓</div>
+                </div>
+                <h3 data-translate="passwordChangeSuccess">Password changed successfully!</h3>
+                <p data-translate="downloadAccountFile">Would you like to download your account file?</p>
+                <div class="dialog-buttons">
+                    <button id="noThanksBtn" class="btn btn-secondary" data-translate="noThanks">No, thanks</button>
+                    <button id="whatsThisBtn" class="btn btn-secondary" data-translate="whatsThis">What's this for?</button>
+                    <button id="yesRecommendedBtn" class="btn btn-primary" data-translate="yesRecommended">Yes (recommended)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account File Info Dialog -->
+        <div id="accountFileInfoDialog" class="modal-overlay zoom-independent" style="display: none;">
+            <div class="account-file-info-dialog">
+                <h3 data-translate="accountFileInfoTitle">Account File Information</h3>
+                <p data-translate="accountFileInfo">Your account file contains your updated credentials. We recommend downloading and storing it securely as a backup. This file can help you recover your account if you forget your login details.</p>
+                <div class="dialog-buttons">
+                    <button id="closeInfoBtn" class="btn btn-secondary" data-translate="close">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Autograph Panel -->
+        <div id="autographScreen" class="autograph-screen" style="display: none;">
+            <div class="autograph-modal">
+                <div class="autograph-header">
+                    <h2 data-translate="autograph">Autograph</h2>
+                    <button id="closeAutographBtn" class="close-btn">×</button>
+                </div>
+                
+                <div class="autograph-content">
+                    <div class="autograph-inputs">
+                        <input 
+                            type="text" 
+                            id="autographUsernameInput" 
+                            data-translate-placeholder="enterUsername" 
+                            placeholder="Enter username" 
+                            class="username-input"
+                        >
+                        
+                        <select id="greetingTypeSelector" class="greeting-select">
+                            <option value="Autograph">Autograph</option>
+                            <option value="JollyGreeting">JollyGreeting</option>
+                            <option value="StarGreeting">StarGreeting</option>
+                            <option value="HalloweenGreeting">HalloweenGreeting</option>
+                            <option value="LoveGreeting">LoveGreeting</option>
+                            <option value="RainbowGreeting">RainbowGreeting</option>
+                            <option value="PartyGreeting">PartyGreeting</option>
+                            <option value="SuperStarGreeting">SuperStarGreeting</option>
+                        </select>
+                        
+                        <button id="startAutogreetBtn" class="btn btn-primary">
+                            <span class="icon">🔍</span>
+                            <span data-translate="findStart">Find & Start</span>
+                        </button>
+                    </div>
+
+                    <div class="autograph-status">
+                        <div class="status-header">
+                            <span data-translate="status">Status</span>
+                            <button id="stopAutogreetBtn" class="btn btn-secondary btn-small" data-translate="stop">Stop</button>
+                        </div>
+                        <div id="autographLog" class="status-log"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gifts Screen -->
+        <div id="giftsScreen" class="gifts-screen" style="display: none;">
+            <div class="gifts-header">
+                <h2 data-translate="gifts">Gifts</h2>
+                <button id="closeGiftsBtn" class="close-btn">×</button>
+            </div>
+            <div class="gifts-controls">
+                <button id="openAllGiftsBtn" class="btn btn-primary open-all-btn" data-translate="openAllGifts">Open All Gifts</button>
+            </div>
+            <div id="giftsList" class="gifts-list"></div>
+        </div>
+
+        <!-- Receipt Screen -->
+        <div id="receiptScreen" class="receipt-screen" style="display: none;">
+            <div class="receipt">
+                <div class="receipt-header">
+                    <h2>OBFX</h2>
+                    <div class="receipt-line"></div>
+                </div>
+                <div class="receipt-content">
+                    <div class="receipt-item">
+                        <span id="receiptGreetingType">Autograph</span>
+                        <span id="receiptCount">0</span>
+                    </div>
+                    <div class="receipt-line"></div>
+                    <div class="receipt-total">
+                        <span data-translate="totalFame">Total Fame:</span>
+                        <span id="receiptTotal">0</span>
+                    </div>
+                </div>
+                <button id="closeReceiptBtn" class="btn btn-primary receipt-close" data-translate="close">Close</button>
+            </div>
+        </div>
+
+        <!-- Fast Start Warning Dialog -->
+        <div id="fastStartDialog" class="modal-overlay zoom-independent" style="display: none;">
+            <div class="fast-start-dialog">
+                <div class="warning-icon">⚠️</div>
+                <h3 data-translate="warning">Warning!</h3>
+                <p data-translate="fastWarning1">Fast completion may lead to account suspension or ban.</p>
+                <div class="dialog-buttons">
+                    <button id="cancelFastStartBtn" class="btn btn-secondary" data-translate="cancel">Cancel</button>
+                    <button id="confirmFastStartBtn" class="btn btn-danger" data-translate="startFastMode">Start Fast Mode</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Region Selection Dialog -->
+    <div id="regionDialog" class="modal-overlay zoom-independent" style="display: none;">
+        <div class="region-dialog">
+            <h3 data-translate="selectRegion">Select Region</h3>
+            <p data-translate="selectRegionDesc">Please select your region before logging in:</p>
+            <div class="region-buttons">
+                <button id="regionUS" class="btn btn-primary region-choice-btn">
+                    <span class="icon">🇺🇸</span>
+                    <span data-translate="unitedStates">United States</span>
+                </button>
+                <button id="regionEU" class="btn btn-primary region-choice-btn">
+                    <span class="icon">🇪🇺</span>
+                    <span data-translate="europe">Europe</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Language Selection Dialog -->
+    <div id="languageDialog" class="modal-overlay zoom-independent" style="display: none;">
+        <div class="language-dialog">
+            <h3 data-translate="languageSelection">Language Selection</h3>
+            <div class="current-language">
+                <p><span data-translate="currentLanguage">Current Language:</span> <span id="currentLanguageName">English</span></p>
+            </div>
+            <div class="language-buttons-container">
+                <div class="language-buttons">
+                    <button id="englishBtn" class="btn btn-primary language-choice-btn active">
+                        <span class="icon">🇺🇸</span>
+                        <span>English</span>
+                    </button>
+                    <button id="turkishBtn" class="btn btn-primary language-choice-btn">
+                        <span class="icon">🇹🇷</span>
+                        <span>Türkçe</span>
+                    </button>
+                    <button id="azerbaijaniBtn" class="btn btn-primary language-choice-btn">
+                        <span class="icon">🇦🇿</span>
+                        <span>Azərbaycan Türkcəsi</span>
+                    </button>
+                </div>
+            </div>
+            <div class="language-dialog-footer">
+                <button id="closeLanguageBtn" class="btn btn-secondary" data-translate="close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Plan Comparison Dialog -->
+    <div id="planDialog" class="modal-overlay zoom-independent" style="display: none;">
+        <div class="plan-dialog">
+            <h3 data-translate="planComparison">Plan Comparison</h3>
+            <div class="plans-container">
+                <div class="plan-card free-plan">
+                    <div class="plan-header">
+                        <h4 data-translate="obfx">Free</h4>
+                        <div class="plan-badge" data-translate="basic">Basic</div>
+                    </div>
+                    <div class="plan-features">
+                        <div class="feature limited">
+                            <span class="feature-icon">⚡</span>
+                            <span data-translate="dailyTasksLevel10">Daily Tasks (Level 10+)</span>
+                        </div>
+                        <div class="feature limited">
+                            <span class="feature-icon">😊</span>
+                            <span data-translate="limitedMoods">Limited Moods (7)</span>
+                        </div>
+                        <div class="feature excluded">
+                            <span class="feature-icon">🎁</span>
+                            <span data-translate="noGifts">No Gifts Access</span>
+                        </div>
+                        <div class="feature included">
+                            <span class="feature-icon">👥</span>
+                            <span data-translate="friendsManagement">Friends Management</span>
+                        </div>
+                        <div class="feature included">
+                            <span class="feature-icon">🔍</span>
+                            <span data-translate="scammerTest">Scammer Test</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="plan-card plus-plan">
+                    <div class="plan-header">
+                        <h4 data-translate="plusPlan">OBFX Plus</h4>
+                        <div class="plan-badge" data-translate="standart">Standart</div>
+                    </div>
+                    <div class="plan-features">
+                        <div class="feature included">
+                            <span class="feature-icon">⚡</span>
+                            <span data-translate="unlimitedDailyTasks">Unlimited Daily Tasks</span>
+                        </div>
+                        <div class="feature included">
+                            <span class="feature-icon">😊</span>
+                            <span data-translate="allMoods">All Moods (37)</span>
+                        </div>
+                        <div class="feature included">
+                            <span class="feature-icon">🎁</span>
+                            <span data-translate="giftsAccess">Full Gifts Access</span>
+                        </div>
+                        <div class="feature included">
+                            <span class="feature-icon">👥</span>
+                            <span data-translate="advancedFriends">Advanced Friends</span>
+                        </div>
+                        <div class="feature included">
+                            <span class="feature-icon">🔍</span>
+                            <span data-translate="scammerTest">Scammer Test</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="plan-card pro-plan">
+                    <div class="plan-header">
+                        <h4 data-translate="proPlan">OBFX Pro</h4>
+                        <div class="plan-badge">Premium</div>
+                    </div>
+                    <div class="plan-features">
+                        <div class="feature included">
+                            <span class="feature-icon">⚡</span>
+                            <span data-translate="unlimitedDailyTasks">Unlimited Daily Tasks</span>
+                        </div>
+                        <div class="feature included">
+                            <span class="feature-icon">😊</span>
+                            <span data-translate="allMoods">All Moods (37)</span>
+                        </div>
+                        <div class="feature included">
+                            <span class="feature-icon">🎁</span>
+                            <span data-translate="giftsAccess">Full Gifts Access</span>
+                        </div>
+                        <div class="feature included">
+                            <span class="feature-icon">👥</span>
+                            <span data-translate="advancedFriends">Advanced Friends</span>
+                        </div>
+                        <div class="feature included">
+                            <span class="feature-icon">👑</span>
+                            <span data-translate="multiAccount">Multi-Account Management</span>
+                        </div>
+                        <div class="feature included">
+                            <span class="feature-icon">⚡</span>
+                            <span data-translate="bulkOperations">Bulk Operations</span>
+                        </div>
+                        <div class="feature included">
+                            <span class="feature-icon">🕵️</span>
+                            <span data-translate="detectiveService">Detective service</span>
+                        </div>
+                        <div class="feature included">
+                            <span class="feature-icon">🔍</span>
+                            <span data-translate="scammerTest">Scammer Test</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="plan-dialog-footer">
+                <button id="closePlanBtn" class="btn btn-secondary" data-translate="close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Zoom Dialog -->
+    <div id="zoomDialog" class="modal-overlay zoom-independent" style="display: none;">
+        <div class="zoom-dialog">
+            <h3 data-translate="zoomLevel">Zoom Level</h3>
+            <div class="zoom-controls">
+                <button id="zoomOutBtn" class="zoom-btn-control">−</button>
+                <span id="zoomLevel">100%</span>
+                <button id="zoomInBtn" class="zoom-btn-control">+</button>
+            </div>
+            <div class="zoom-presets">
+                <button class="zoom-preset" data-zoom="0.8">80%</button>
+                <button class="zoom-preset" data-zoom="1.0">100%</button>
+                <button class="zoom-preset" data-zoom="1.2">120%</button>
+                <button class="zoom-preset" data-zoom="1.5">150%</button>
+            </div>
+            <div class="zoom-dialog-footer">
+                <button id="closeZoomBtn" class="btn btn-secondary" data-translate="close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete All Confirmation Dialog -->
+    <div id="deleteAllDialog" class="modal-overlay zoom-independent" style="display: none;">
+        <div class="delete-all-dialog">
+            <div class="warning-icon">⚠️</div>
+            <h3 data-translate="dangerousAction">Dangerous Action!</h3>
+            <p data-translate="deleteAllWarning">This action will remove ALL users from the selected category. This is risky and cannot be undone!</p>
+            <div class="countdown-container">
+                <div class="countdown-circle">
+                    <span id="countdownNumber">5</span>
+                </div>
+                <p data-translate="waitCountdown">Wait for countdown to finish...</p>
+            </div>
+            <div class="dialog-buttons">
+                <button id="cancelDeleteAllBtn" class="btn btn-secondary" data-translate="no">No</button>
+                <button id="confirmDeleteAllBtn" class="btn btn-danger" data-translate="yes" disabled>Yes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+     <script src="security.js"></script>
+    <script src="language.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

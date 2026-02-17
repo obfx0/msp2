@@ -1136,7 +1136,7 @@ async function loadInboxConversations() {
         const encodedProfileId = encodeProfileId(profileData.profileId);
         
         const response = await makeAuthenticatedRequest(
-            `${endpoints.gamemessaging}/participants/${encodedProfileId}/conversations?page=1&pageSize=50`,
+            `${endpoints.gamemessaging}/participants/${encodedProfileId}/conversations?page=1&pageSize=100`,
             {
                 headers: {
                     'Authorization': `Bearer ${profileData.accessToken}`,
@@ -1333,7 +1333,7 @@ async function loadConversationMessages() {
         const encodedProfileId = encodeProfileId(profileData.profileId);
         
         const response = await makeAuthenticatedRequest(
-            `${endpoints.gamemessaging}/conversations/${currentConversationId}/history?profileId=${encodedProfileId}&pageSize=50`,
+            `${endpoints.gamemessaging}/conversations/${currentConversationId}/history?profileId=${encodedProfileId}&pageSize=100`,
             {
                 headers: {
                     'Authorization': `Bearer ${profileData.accessToken}`,

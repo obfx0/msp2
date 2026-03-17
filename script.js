@@ -199,8 +199,8 @@ let currentMessagesPage = 0;
 let currentConversationId = null;
 let currentConversationOtherProfile = null;
 let currentConversationMessages = [];
-const CONVERSATIONS_PER_PAGE = 5;
-const MESSAGES_PER_PAGE = 10;
+const CONVERSATIONS_PER_PAGE = 10;
+const MESSAGES_PER_PAGE = 20;
 
 // Translation helper function
 function showTranslatedNotification(key, type = 'info', params = {}) {
@@ -1136,7 +1136,7 @@ async function loadInboxConversations() {
         const encodedProfileId = encodeProfileId(profileData.profileId);
         
         const response = await makeAuthenticatedRequest(
-            `${endpoints.gamemessaging}/participants/${encodedProfileId}/conversations?page=1&pageSize=100`,
+            `${endpoints.gamemessaging}/participants/${encodedProfileId}/conversations?page=1&pageSize=1000`,
             {
                 headers: {
                     'Authorization': `Bearer ${profileData.accessToken}`,
